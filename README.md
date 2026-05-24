@@ -34,6 +34,21 @@ Then start a new Codex session in a repo and say something like:
 capture directions for this repo
 ```
 
+## Install For Claude Code
+
+Copy the Claude Code adapter into your Claude skills directory:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R adapters/claude-code ~/.claude/skills/smallest-human-action
+```
+
+Then start a new Claude Code session in a repo and say something like:
+
+```text
+give me a smallest human action
+```
+
 ## Layout
 
 ```text
@@ -49,6 +64,11 @@ smallest-human-action/
     codex/
       SKILL.md
       agents/openai.yaml
+      references/directions-schema.md
+      scripts/
+    claude-code/
+      SKILL.md
+      README.md
       references/directions-schema.md
       scripts/
 ```

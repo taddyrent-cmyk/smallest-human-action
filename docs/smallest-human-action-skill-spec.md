@@ -355,6 +355,7 @@ In scope:
 
 - platform-agnostic Smallest Human Action protocol;
 - Codex adapter;
+- Claude Code adapter;
 - repo-local `.smallest-human-action/directions.json`;
 - Capture Directions / Ask For Action / Feedback workflows;
 - JSON validation and migration from `.one-human-move/moves.json`;
