@@ -1,0 +1,4 @@
+interface:
+  display_name: "Smallest Human Action"
+  short_description: "Choose a project direction and take one small human action"
+  default_prompt: "Capture the human-owned directions for this repo, or give me one smallest human action from the existing directions."
