@@ -18,6 +18,7 @@ The workflow has three stages:
 1. Capture Directions: turn messy user thoughts plus repo context into durable user-owned Directions.
 2. Ask For Action: choose one Direction and generate one Smallest Human Action.
 3. Feedback Loop: record each suggested action under its Direction so future suggestions get more precise.
+4. Visualize Map: show all Directions and Actions with current status without opening JSON.
 
 ## Install For Codex
 
@@ -63,6 +64,9 @@ help me figure out which direction I need to move in
 give me a smallest human action
 give me an action
 我现在卡住了，给我一个 action
+show my direction map
+visualize directions
+看一下现在所有 direction 和 action 的状态
 ```
 
 Older phrases such as `make move` can be treated as action requests by adapters, but the user-facing language should use Direction and Action.

@@ -16,6 +16,7 @@ The protocol has three user-facing stages:
 - Capture Directions: preserve the larger user-owned directions, decisions, and project loops.
 - Ask For Action: turn one Direction into one Smallest Human Action.
 - Feedback Loop: record each suggested action under its Direction, update action status, and use that state to make the next action more accurate.
+- Visualize Map: show all Directions and Actions with current status without making the user open JSON.
 
 ## State
 
@@ -141,6 +142,14 @@ E. Work with me
 Also understand natural language updates such as "I did something else", "actually I realized", "make it more concrete", and "wrong direction".
 
 Feedback must affect future suggestions. In-progress actions should keep the current session focused; completed actions should not be repeated; too-hard actions should shrink; skipped or not-now Directions should be deprioritized; user realizations should update project context or Direction notes before the next action. `direction.actions[]` is the canonical action record; `history[]` is a cross-Direction event timeline.
+
+### Visualize Map
+
+1. Hydrate session context if this is the first skill use in the session.
+2. Read direction state.
+3. Output a compact Markdown dashboard with all Directions, Direction statuses, Actions, Action statuses, results, and recent timeline.
+4. Do not require the user to open or inspect `directions.json`.
+5. Keep it scannable and status-oriented.
 
 ## Tone
 

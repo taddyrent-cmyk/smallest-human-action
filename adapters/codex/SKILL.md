@@ -131,6 +131,7 @@ The user-facing workflow has three stages:
 1. Capture Directions: turn messy user thoughts plus repo context into durable Directions.
 2. Ask For Action: choose one Direction and generate one Smallest Human Action.
 3. Feedback Loop: record each suggested action under its Direction, update action status, and use that state to make the next action more accurate.
+4. Visualize Map: show all Directions and Actions with their current status without making the user open JSON.
 
 ### Capture Directions
 
@@ -231,6 +232,46 @@ Useful script:
 
 ```bash
 python3 ~/.codex/skills/smallest-human-action/scripts/update_directions.py <repo-root> done --result "User did the action"
+```
+
+### Visualize Map
+
+Use when the user asks to visualize, show all directions, see action status, show the map/dashboard, or asks what is currently captured.
+
+1. Hydrate session context if this is the first skill use in the session.
+2. Read `.smallest-human-action/directions.json`.
+3. Output a compact Markdown dashboard. Do not ask the user to open the JSON file.
+4. Include all Directions, their statuses, and the Actions under each Direction with action status/result.
+5. Keep it scannable; this is a status view, not a planning session.
+
+Useful script:
+
+```bash
+python3 ~/.codex/skills/smallest-human-action/scripts/visualize_directions.py <repo-root>
+```
+
+Output shape:
+
+```text
+# Smallest Human Action Map
+
+Project: ...
+Goal: ...
+
+## Summary
+- Directions: ...
+- Actions: ...
+
+## Directions
+
+### [open] Direction title
+- Why: ...
+- User-owned because: ...
+- State: energy ..., clarity ..., resistance ...
+
+| Action Status | Action | Result | Updated |
+| --- | --- | --- | --- |
+| in_progress | ... | ... | ... |
 ```
 
 ## Empty State
