@@ -82,30 +82,30 @@ def choose_focus(directions):
 def render_focus(focus):
     direction, action = focus
     lines = [
-        f"Direction: [{direction.get('status')}] {one_line(direction.get('title'))}",
-        f"Why: {one_line(direction.get('whyItMatters'))}",
+        f"- Direction [{direction.get('status')}]: {one_line(direction.get('title'))}",
+        f"  - Why: {one_line(direction.get('whyItMatters'))}",
     ]
     if action:
-        lines.append(f"Action: [{action.get('status')}] {one_line(action.get('text'))}")
+        lines.append(f"  - Action [{action.get('status')}]: {one_line(action.get('text'))}")
         if action.get("result"):
-            lines.append(f"Last result: {one_line(action.get('result'))}")
+            lines.append(f"  - Last result: {one_line(action.get('result'))}")
     else:
-        lines.append("Action: none shown yet")
+        lines.append("  - Action: none shown yet")
     return lines
 
 
 def render_outline_direction(index, direction):
-    lines = [f"{index}. [{direction.get('status')}] {one_line(direction.get('title'))}"]
+    lines = [f"- [{direction.get('status')}] {one_line(direction.get('title'))}"]
     actions = direction.get("actions", [])
     if not actions:
-        lines.append("   - [none] No actions shown yet")
+        lines.append("  - [none] No actions shown yet")
         return lines
 
     for action in actions[-3:]:
-        result = f" - {one_line(action.get('result'))}" if action.get("result") else ""
-        lines.append(f"   - [{action.get('status')}] {one_line(action.get('text'))}{result}")
+        result = f" — {one_line(action.get('result'))}" if action.get("result") else ""
+        lines.append(f"  - [{action.get('status')}] {one_line(action.get('text'))}{result}")
     if len(actions) > 3:
-        lines.append(f"   - ... {len(actions) - 3} earlier actions")
+        lines.append(f"  - ... {len(actions) - 3} earlier actions")
     return lines
 
 

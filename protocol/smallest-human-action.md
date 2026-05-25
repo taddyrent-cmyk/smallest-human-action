@@ -151,6 +151,7 @@ Feedback must affect future suggestions. In-progress actions should keep the cur
 4. Show one focused Direction/Action first, then a terse outline of all Directions and recent Actions.
 5. Do not require the user to open or inspect `directions.json`.
 6. Keep it scannable and status-oriented.
+7. Never use Markdown tables, ASCII tables, aligned columns, or box-drawing lines for this view. Use only nested lists with indentation.
 
 ## Tone
 

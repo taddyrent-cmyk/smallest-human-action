@@ -243,6 +243,7 @@ Use when the user asks to visualize, show all directions, see action status, sho
 3. Output a compact Current Focus plus Outline Map. Do not ask the user to open the JSON file.
 4. Show one focused Direction/Action first, then a terse outline of all Directions and recent Actions.
 5. Keep it scannable; this is a status view, not a planning session.
+6. Never use Markdown tables, ASCII tables, aligned columns, or box-drawing lines for this view. Use only nested lists with indentation.
 
 Useful script:
 
@@ -261,14 +262,15 @@ Snapshot: ...
 
 ## Current Focus
 
-Direction: [status] ...
-Why: ...
-Action: [status] ...
+- Direction [status]: ...
+  - Why: ...
+  - Action [status]: ...
+  - Last result: ...
 
 ## Outline Map
 
-1. [open] Direction title
-   - [in_progress] Action text - result
+- [open] Direction title
+  - [in_progress] Action text — result
 ```
 
 ## Empty State
