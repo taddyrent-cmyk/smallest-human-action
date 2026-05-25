@@ -184,6 +184,7 @@ A. Done — I did it.
 B. Too hard — make this action smaller.
 C. Different direction — give me an action from another direction.
 D. Not now — do not bring this direction back in this session.
+E. Work with me — help me think through it and do it in this session.
 
 Or reply in your own words with what happened, what you realized, or why this action is off.
 ```
@@ -199,15 +200,18 @@ A. Done
 B. Too hard
 C. Different direction
 D. Not now
+E. Work with me
 ```
 
 - `A` / `done`: record progress. Do not mark the whole Direction resolved unless the underlying user-owned loop is actually resolved.
 - `B` / `too hard`: keep the same Direction and make the action smaller.
 - `C` / `different direction` / `skip`: record skipped and choose a different Direction if available.
 - `D` / `not now`: avoid resurfacing this Direction in the current session.
+- `E` / `work with me` / "help me do this" / equivalent: mark the action `in_progress`, keep the current session focused on this action, and collaborate with the user to think through and complete it.
 
 Feedback is part of the product, not bookkeeping. The next action should be informed by what happened before:
 
+- If the user starts working on an action with the agent, mark it `in_progress` so the current session can continue from that action.
 - If the user completed an action, avoid repeating it and make the next action build on that progress.
 - If an action was too hard, reduce size, ambiguity, emotional cost, or required setup.
 - If a Direction was skipped or marked not now, avoid resurfacing it immediately.
@@ -219,6 +223,7 @@ Also understand natural language:
 
 - "I did something else..." means record valid progress.
 - "Actually I realized..." means update project context or Direction notes.
+- "Help me do this..." means mark the current action `in_progress` and help the user complete it in this session.
 - "Make it more concrete" means rewrite the same action with fewer assumptions.
 - "Wrong direction" or "wrong action" means ask one short repair question and update selection context.
 

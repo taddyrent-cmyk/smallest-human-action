@@ -11,8 +11,8 @@ LEGACY_STATE_FILE = "moves.json"
 DIRECTION_STATUSES = {"open", "in_progress", "resolved", "parked"}
 ENERGY_LEVELS = {"low", "medium", "high"}
 CLARITY_LEVELS = {"clear", "fuzzy", "blocked"}
-HISTORY_EVENTS = {"shown", "done", "too_hard", "skipped", "not_now", "note"}
-ACTION_STATUSES = {"shown", "done", "too_hard", "skipped", "not_now"}
+HISTORY_EVENTS = {"shown", "in_progress", "done", "too_hard", "skipped", "not_now", "note"}
+ACTION_STATUSES = {"shown", "in_progress", "done", "too_hard", "skipped", "not_now"}
 
 
 def state_path(repo_root):
@@ -229,7 +229,7 @@ def append_history(repo_root, direction_id, event, action, result=None):
                 action_item["updatedAt"] = timestamp
                 history_item["actionId"] = action_item["id"]
         direction["updatedAt"] = timestamp
-        if event in {"shown", "done", "too_hard", "skipped", "not_now"}:
+        if event in {"shown", "in_progress", "done", "too_hard", "skipped", "not_now"}:
             direction["lastTouchedAt"] = timestamp
 
     state.setdefault("history", []).append(history_item)

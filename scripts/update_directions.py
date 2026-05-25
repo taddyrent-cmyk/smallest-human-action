@@ -21,7 +21,7 @@ def main():
     show_parser.add_argument("direction_id")
     show_parser.add_argument("--action", required=True)
 
-    for command in ("done", "too_hard", "skip", "not_now"):
+    for command in ("in_progress", "done", "too_hard", "skip", "not_now"):
         event_parser = subparsers.add_parser(command)
         event_parser.add_argument("--result")
 

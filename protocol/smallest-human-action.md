@@ -115,6 +115,7 @@ A. Done — I did it.
 B. Too hard — make this action smaller.
 C. Different direction — give me an action from another direction.
 D. Not now — do not bring this direction back in this session.
+E. Work with me — help me think through it and do it in this session.
 
 Or reply in your own words with what happened, what you realized, or why this action is off.
 ```
@@ -128,16 +129,18 @@ A. Done
 B. Too hard
 C. Different direction
 D. Not now
+E. Work with me
 ```
 
 - `A` / `done`: record progress. Do not mark the entire Direction resolved unless the underlying user-owned loop is resolved.
 - `B` / `too hard`: keep the same Direction and make the action smaller.
 - `C` / `different direction` / `skip`: record skipped and choose a different Direction if available.
 - `D` / `not now`: avoid resurfacing this Direction in the current session.
+- `E` / `work with me` / "help me do this" / equivalent: mark the action `in_progress`, keep the current session focused on this action, and collaborate with the user to think through and complete it.
 
 Also understand natural language updates such as "I did something else", "actually I realized", "make it more concrete", and "wrong direction".
 
-Feedback must affect future suggestions. Completed actions should not be repeated; too-hard actions should shrink; skipped or not-now Directions should be deprioritized; user realizations should update project context or Direction notes before the next action. `direction.actions[]` is the canonical action record; `history[]` is a cross-Direction event timeline.
+Feedback must affect future suggestions. In-progress actions should keep the current session focused; completed actions should not be repeated; too-hard actions should shrink; skipped or not-now Directions should be deprioritized; user realizations should update project context or Direction notes before the next action. `direction.actions[]` is the canonical action record; `history[]` is a cross-Direction event timeline.
 
 ## Tone
 

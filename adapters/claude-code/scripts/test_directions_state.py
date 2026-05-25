@@ -160,6 +160,34 @@ class DirectionsStateTest(unittest.TestCase):
             self.assertEqual(state["directions"][0]["actions"][0]["status"], "too_hard")
             self.assertEqual(state["directions"][0]["actions"][0]["result"], "Still too vague.")
 
+    def test_in_progress_updates_latest_action_under_direction(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            create_initial_state(
+                repo,
+                project_name="Test Project",
+                goal="Goal",
+                context=[],
+                directions=[
+                    {
+                        "title": "Shape the demo story",
+                        "whyItMatters": "The product needs a concrete story.",
+                        "userOnlyReason": "Only the user can choose the story they believe.",
+                        "energy": "medium",
+                        "clarity": "fuzzy",
+                        "resistance": "medium",
+                    }
+                ],
+            )
+            append_history(repo, direction_id="direction_1", event="shown", action="Write the first sentence.")
+
+            mark_latest_event(repo, event="in_progress", result="User wants the agent to help in this session.")
+            state = load_state(repo)
+
+            self.assertEqual(state["history"][-1]["event"], "in_progress")
+            self.assertEqual(state["directions"][0]["actions"][0]["status"], "in_progress")
+            self.assertEqual(state["directions"][0]["actions"][0]["result"], "User wants the agent to help in this session.")
+
     def test_migrate_legacy_moves_to_directions(self):
         legacy_state = {
             "version": 1,

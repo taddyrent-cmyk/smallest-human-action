@@ -116,6 +116,7 @@ blocked
 
 ```text
 shown
+in_progress
 done
 too_hard
 skipped
@@ -125,4 +126,4 @@ note
 
 `history` is a cross-Direction event timeline. It should reference `directionId` and, when applicable, `actionId`. It is not the canonical place to store action text or action status.
 
-Both `directions[].actions[]` and `history[]` are inputs to future action generation. The agent should use recent `shown`, `done`, `too_hard`, `skipped`, `not_now`, and `note` events to avoid repetition, shrink actions that were too hard, deprioritize skipped Directions, and incorporate user realizations.
+Both `directions[].actions[]` and `history[]` are inputs to future action generation. The agent should use recent `shown`, `in_progress`, `done`, `too_hard`, `skipped`, `not_now`, and `note` events to continue active work, avoid repetition, shrink actions that were too hard, deprioritize skipped Directions, and incorporate user realizations.
