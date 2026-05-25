@@ -131,7 +131,7 @@ The user-facing workflow has three stages:
 1. Capture Directions: turn messy user thoughts plus repo context into durable Directions.
 2. Ask For Action: choose one Direction and generate one Smallest Human Action.
 3. Feedback Loop: record each suggested action under its Direction, update action status, and use that state to make the next action more accurate.
-4. Visualize Map: show all Directions and Actions with their current status without making the user open JSON.
+4. Visualize Map: show a compact Current Focus plus Outline Map without making the user open JSON.
 
 ### Capture Directions
 
@@ -240,8 +240,8 @@ Use when the user asks to visualize, show all directions, see action status, sho
 
 1. Hydrate session context if this is the first skill use in the session.
 2. Read `.smallest-human-action/directions.json`.
-3. Output a compact Markdown dashboard. Do not ask the user to open the JSON file.
-4. Include all Directions, their statuses, and the Actions under each Direction with action status/result.
+3. Output a compact Current Focus plus Outline Map. Do not ask the user to open the JSON file.
+4. Show one focused Direction/Action first, then a terse outline of all Directions and recent Actions.
 5. Keep it scannable; this is a status view, not a planning session.
 
 Useful script:
@@ -253,25 +253,22 @@ python3 "${CLAUDE_SKILL_DIR}/scripts/visualize_directions.py" <repo-root>
 Output shape:
 
 ```text
-# Smallest Human Action Map
+# Direction Map
 
 Project: ...
 Goal: ...
+Snapshot: ...
 
-## Summary
-- Directions: ...
-- Actions: ...
+## Current Focus
 
-## Directions
+Direction: [status] ...
+Why: ...
+Action: [status] ...
 
-### [open] Direction title
-- Why: ...
-- User-owned because: ...
-- State: energy ..., clarity ..., resistance ...
+## Outline Map
 
-| Action Status | Action | Result | Updated |
-| --- | --- | --- | --- |
-| in_progress | ... | ... | ... |
+1. [open] Direction title
+   - [in_progress] Action text - result
 ```
 
 ## Empty State

@@ -14,45 +14,36 @@ def one_line(value):
 def render_state(state):
     project = state.get("project", {})
     directions = state.get("directions", [])
-    history = state.get("history", [])
 
     lines = [
-        "# Smallest Human Action Map",
+        "# Direction Map",
         "",
         f"Project: {one_line(project.get('name', 'Project'))}",
-        f"Goal: {one_line(project.get('goal', ''))}",
-        "",
-        "## Summary",
-        "",
     ]
+    goal = one_line(project.get("goal", ""))
+    if goal:
+        lines.append(f"Goal: {goal}")
+    lines.append("")
 
     direction_counts = count_by_status(directions)
     actions = [action for direction in directions for action in direction.get("actions", [])]
     action_counts = count_by_status(actions)
-
-    lines.extend(
-        [
-            f"- Directions: {len(directions)} total, {format_counts(direction_counts)}",
-            f"- Actions: {len(actions)} total, {format_counts(action_counts)}",
-            "",
-            "## Directions",
-            "",
-        ]
-    )
+    lines.append(f"Snapshot: {len(directions)} directions ({format_counts(direction_counts)}); {len(actions)} actions ({format_counts(action_counts)})")
+    lines.append("")
 
     if not directions:
-        lines.append("No directions captured yet.")
-    for direction in directions:
-        lines.extend(render_direction(direction))
+        return "\n".join(lines + ["No directions captured yet."]).rstrip() + "\n"
 
-    if history:
-        lines.extend(["", "## Recent Timeline", ""])
-        for item in history[-8:]:
-            action_ref = f", action {item.get('actionId')}" if item.get("actionId") else ""
-            result = f" - {one_line(item.get('result'))}" if item.get("result") else ""
-            lines.append(
-                f"- {item.get('createdAt')}: {item.get('event')} on {item.get('directionId')}{action_ref}{result}"
-            )
+    focus = choose_focus(directions)
+    lines.extend(["## Current Focus", ""])
+    if focus:
+        lines.extend(render_focus(focus))
+    else:
+        lines.append("No active action yet.")
+
+    lines.extend(["", "## Outline Map", ""])
+    for index, direction in enumerate(directions, start=1):
+        lines.extend(render_outline_direction(index, direction))
 
     return "\n".join(lines).rstrip() + "\n"
 
@@ -71,39 +62,50 @@ def format_counts(counts):
     return ", ".join(f"{status} {count}" for status, count in sorted(counts.items()))
 
 
-def render_direction(direction):
+def choose_focus(directions):
+    priority = {"in_progress": 0, "shown": 1, "too_hard": 2}
+    candidates = []
+    for direction in directions:
+        for action in direction.get("actions", []):
+            status = action.get("status")
+            if status in priority:
+                candidates.append((priority[status], action.get("updatedAt") or "", direction, action))
+    if candidates:
+        return sorted(candidates, key=lambda item: (item[0], item[1]))[0][2:]
+
+    open_directions = [direction for direction in directions if direction.get("status") in {"open", "in_progress"}]
+    if open_directions:
+        return (open_directions[0], None)
+    return (directions[0], None) if directions else None
+
+
+def render_focus(focus):
+    direction, action = focus
     lines = [
-        f"### [{direction.get('status')}] {one_line(direction.get('title'))}",
-        "",
-        f"- Why: {one_line(direction.get('whyItMatters'))}",
-        f"- User-owned because: {one_line(direction.get('userOnlyReason'))}",
-        f"- State: energy {direction.get('energy')}, clarity {direction.get('clarity')}, resistance {direction.get('resistance')}",
+        f"Direction: [{direction.get('status')}] {one_line(direction.get('title'))}",
+        f"Why: {one_line(direction.get('whyItMatters'))}",
     ]
-
-    notes = direction.get("notes", [])
-    if notes:
-        lines.append(f"- Notes: {one_line(notes[-1])}")
-
-    lines.extend(["", "| Action Status | Action | Result | Updated |", "| --- | --- | --- | --- |"])
-    actions = direction.get("actions", [])
-    if actions:
-        for action in actions:
-            lines.append(
-                "| "
-                + " | ".join(
-                    [
-                        one_line(action.get("status")),
-                        one_line(action.get("text")),
-                        one_line(action.get("result")),
-                        one_line(action.get("updatedAt")),
-                    ]
-                )
-                + " |"
-            )
+    if action:
+        lines.append(f"Action: [{action.get('status')}] {one_line(action.get('text'))}")
+        if action.get("result"):
+            lines.append(f"Last result: {one_line(action.get('result'))}")
     else:
-        lines.append("| none | No actions shown yet |  |  |")
+        lines.append("Action: none shown yet")
+    return lines
 
-    lines.append("")
+
+def render_outline_direction(index, direction):
+    lines = [f"{index}. [{direction.get('status')}] {one_line(direction.get('title'))}"]
+    actions = direction.get("actions", [])
+    if not actions:
+        lines.append("   - [none] No actions shown yet")
+        return lines
+
+    for action in actions[-3:]:
+        result = f" - {one_line(action.get('result'))}" if action.get("result") else ""
+        lines.append(f"   - [{action.get('status')}] {one_line(action.get('text'))}{result}")
+    if len(actions) > 3:
+        lines.append(f"   - ... {len(actions) - 3} earlier actions")
     return lines
 
 

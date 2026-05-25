@@ -18,7 +18,7 @@ The workflow has three stages:
 1. Capture Directions: turn messy user thoughts plus repo context into durable user-owned Directions.
 2. Ask For Action: choose one Direction and generate one Smallest Human Action.
 3. Feedback Loop: record each suggested action under its Direction so future suggestions get more precise.
-4. Visualize Map: show all Directions and Actions with current status without opening JSON.
+4. Visualize Map: show a compact Current Focus plus Outline Map without opening JSON.
 
 ## Install For Codex
 

@@ -31,11 +31,15 @@ class VisualizeDirectionsTest(unittest.TestCase):
 
             output = render_state(load_state(repo))
 
-            self.assertIn("# Smallest Human Action Map", output)
+            self.assertIn("# Direction Map", output)
             self.assertIn("Project: Demo Project", output)
-            self.assertIn("### [open] Shape the demo story", output)
-            self.assertIn("| in_progress | Write the first demo sentence. | User wants help in this session.", output)
-            self.assertIn("## Recent Timeline", output)
+            self.assertIn("## Current Focus", output)
+            self.assertIn("Direction: [open] Shape the demo story", output)
+            self.assertIn("Action: [in_progress] Write the first demo sentence.", output)
+            self.assertIn("Last result: User wants help in this session.", output)
+            self.assertIn("## Outline Map", output)
+            self.assertIn("1. [open] Shape the demo story", output)
+            self.assertIn("   - [in_progress] Write the first demo sentence. - User wants help in this session.", output)
 
 
 if __name__ == "__main__":
